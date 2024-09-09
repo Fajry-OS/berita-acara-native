@@ -1,9 +1,10 @@
 <?php
 session_start();
 include 'koneksi.php';
+include 'helpers/title.php';
+$title = getTitle($_GET['pg'] ?? 'Dashboard');
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +38,7 @@ include 'koneksi.php';
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Blank Page</h1>
+                            <h1><?php echo $title ?></h1>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -55,7 +56,7 @@ include 'koneksi.php';
                 <!-- Default box -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Title</h3>
+                        <h3 class="card-title"><?php echo $title ?></h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -69,19 +70,19 @@ include 'koneksi.php';
                     <div class="card-body">
                         <?php
                         if (isset($_GET['pg'])) {
-                            if (file_exists('contents/' . $_GET['pg'] . '.php')) {
-                                include 'contents/' . $_GET['pg'] . '.php';
+                            if (file_exists('content/' . $_GET['pg'] . '.php')) {
+                                include 'content/' . $_GET['pg'] . '.php';
                             } else {
                                 echo "not found";
                             }
                         } else {
-                            include 'contents/home.php';
+                            include 'content/home.php';
                         }
                         ?>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        Footer
+                        Sistem Informasi Berita Acara
                     </div>
                     <!-- /.card-footer-->
                 </div>
@@ -115,6 +116,8 @@ include 'koneksi.php';
     <script src="assets/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="assets/dist/js/demo.js"></script>
+
+
 </body>
 
 </html>

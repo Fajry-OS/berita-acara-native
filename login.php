@@ -4,9 +4,9 @@ include 'koneksi.php';
 
 if (isset($_POST['submit'])) {
     $email = $_POST['email'];
-    $password =  sha1($_POST['password']);
+    $password = sha1($_POST['password']);
 
-    $user = mysqli_query($koneksi, "SELECT * FROM users WHERE email = '$email'");
+    $user = mysqli_query($koneksi, "SELECT * FROM users WHERE email ='$email'");
     if (mysqli_num_rows($user) > 0) {
         $user = mysqli_fetch_assoc($user);
         if ($user['password'] == $password) {
@@ -15,12 +15,12 @@ if (isset($_POST['submit'])) {
             header("location:index.php");
         }
     } else {
+        // jika tidak data user berdasarkan email
         header("location:login.php?error=login-gagal");
     }
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,14 +47,14 @@ if (isset($_POST['submit'])) {
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <?php if (isset($_GET['error'])) { ?>
-                    <div class="alert alert-warning">Mohon periksa kembali email dan password anda</div>
-                <?php } ?>
+                <!-- <?php if (isset($_GET['error'])) { ?>
+                    <div class="alert alert-warning">Mohon periksa kembali email dan password anda!!</div>
+                <?php } ?> -->
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form action="" method="post">
+                <form action="#" method="post">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
+                        <input name="email" type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input name="password" type="password" class="form-control" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -85,9 +85,6 @@ if (isset($_POST['submit'])) {
                         <!-- /.col -->
                     </div>
                 </form>
-
-
-                <!-- /.social-auth-links -->
             </div>
             <!-- /.login-card-body -->
         </div>
@@ -100,6 +97,17 @@ if (isset($_POST['submit'])) {
     <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="assets/dist/js/adminlte.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        <?php if (isset($_GET['error'])) { ?>
+            Swal.fire({
+                title: 'Error!',
+                text: 'Mohon periksa kembali email dan password anda',
+                icon: 'error',
+                confirmButtonText: 'Cool'
+            })
+        <?php } ?>
+    </script>
 </body>
 
 </html>
