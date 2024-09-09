@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start(); //untuk permasalahan header atau ganti page
 include 'koneksi.php';
 include 'helpers/title.php';
 $title = getTitle($_GET['pg'] ?? 'Dashboard');

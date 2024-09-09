@@ -21,7 +21,10 @@ $queryLevel = mysqli_query($koneksi, "SELECT * FROM levels ORDER BY id DESC")
             <tr>
                 <td><?= $no++ ?></td>
                 <td><?= $rowLevel['level_name'] ?></td>
-                <td>Edit | Delete</td>
+                <td>
+                    <a href="?pg=tambah-level&edit=<?= $rowLevel['id'] ?>" class="btn btn-success btn-sm">Edit</a>
+                    <a href="?pg=tambah-level&delete=<?= $rowLevel['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda ingin menghapus data ini?')">Delete</a>
+                </td>
             </tr>
         <?php endwhile ?>
     </tbody>

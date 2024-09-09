@@ -1,11 +1,11 @@
 <?php
-if (isset($_POST['simpan'])) {
-    $fullname = $_POST['fullname'];
-    $email = $_POST['email'];
-    $password = sha1($_POST['password']);
 
-    $insert = mysqli_query($koneksi, "INSERT INTO users (fullname, email, password) VALUES ('$fullname', '$email', '$password')");
-    header("location:?pg=user&tambah=berhasil");
+if (isset($_POST['simpan'])) {
+    $level_id = $_POST['level_id'];
+    $user_id = $_GET['id_user'];
+
+    $insert = mysqli_query($koneksi, "INSERT INTO user_levels (level_id, user_id) VALUES ('$level_id', '$user_id')");
+    header("location:?pg=user-role&id_user=" . urlencode($user_id) . "&tambah=berhasil");
 }
 
 if (isset($_GET['delete'])) {
@@ -28,31 +28,24 @@ if (isset($_POST['edit'])) {
     $update = mysqli_query($koneksi, "UPDATE users SET fullname='$fullname', email='$email', password='$password' WHERE id = '$id'");
     header("location:?pg=user&ubah=berhasil");
 }
+
+$queryLevels = mysqli_query($koneksi, "SELECT * FROM levels ORDER BY id DESC");
+
+
 ?>
 
 <form action="" method="post">
     <div class="mb-3 row">
         <div class="col-sm-2">
-            <label for="">Nama Lengkap</label>
+            <label for="">Nama Level</label>
         </div>
         <div class="col-sm-6">
-            <input type="text" class="form-control" name="fullname" placeholder="Nama Lengkap" value="<?= $rowEdit['fullname'] ?? '' ?>">
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <div class="col-sm-2">
-            <label for="">Email</label>
-        </div>
-        <div class="col-sm-6">
-            <input type="email" class="form-control" name="email" placeholder="Email" value="<?= $rowEdit['email'] ?? '' ?>">
-        </div>
-    </div>
-    <div class="mb-3 row">
-        <div class="col-sm-2">
-            <label for="">Password</label>
-        </div>
-        <div class="col-sm-6">
-            <input type="password" class="form-control" name="password" placeholder="Password" value="<?= $rowEdit['password'] ?? '' ?>">
+            <select name="level_id" id="" class="form-control">
+                <option value="">Pilih Level</option>
+                <?php while ($rowLevel = mysqli_fetch_assoc($queryLevels)): ?>
+                    <option value="<?= $rowLevel['id'] ?>"><?= $rowLevel['level_name'] ?></option>
+                <?php endwhile ?>
+            </select>
         </div>
     </div>
     <div class="mb-3 offset-md-2">
